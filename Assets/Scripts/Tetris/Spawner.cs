@@ -5,9 +5,11 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject[] Tetrominoes;
+    GameManager _manager;
     // Start is called before the first frame update
     void Start()
     {
+        _manager = GetComponent<GameManager>();
         NewTetromino();
     }
 
@@ -19,6 +21,8 @@ public class Spawner : MonoBehaviour
 
     public void NewTetromino()
     {
-        Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position, Quaternion.identity);
+        GameObject go = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position, Quaternion.identity);
+        go.transform.parent = transform;
+        if (!_manager.ValidMove(go.transform)) _manager.GameOver();
     }
 }
