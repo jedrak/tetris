@@ -21,8 +21,16 @@ public class Spawner : MonoBehaviour
 
     public void NewTetromino()
     {
+        
+        
+        
         GameObject go = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position, Quaternion.identity);
         go.transform.parent = transform;
-        if (!_manager.ValidMove(go.transform)) _manager.GameOver();
+        if (!_manager.ValidMove(go.transform))
+        {
+            _manager.GameOver();
+            Destroy(go);
+        }
+
     }
 }
