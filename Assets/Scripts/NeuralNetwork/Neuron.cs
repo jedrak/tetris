@@ -8,7 +8,7 @@ public class Neuron
 {
     public List<Synapse> Inputs;
     public List<Synapse> Outputs;
-    public float Bias;
+    //public float Bias;
     public float Value;
     public ActivationFunction activationFunction;
     public NeuronView view;
@@ -34,7 +34,7 @@ public class Neuron
 
     public float Calculate()
     {
-        return Value = activationFunction.Output(Inputs.Sum(s => s.Weight * s.InputNeuron.Value) + Bias);
+        return Value = activationFunction.Output(Inputs.Sum(s => s.Weight * s.InputNeuron.Value));
     }
     
 }

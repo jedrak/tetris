@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class Population : MonoBehaviour
+public class ColorPopulation : MonoBehaviour
 {
     public List<GameObject> population;
     public GameObject prefab;

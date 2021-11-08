@@ -1,62 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
-public class Block : MonoBehaviour
+public class BlockInputListener : Block
 {
-    private float previousTime;
-    public float fallTime = .8f;
-    public static int h = 20;
-    public static int w = 10;
-    public Vector3 rotationPoint;
-    public GameManager _GameManager;
-    void Start()
+    public NeuralNetwork nn;
+    private void Awake()
     {
-        _GameManager = GetComponentInParent<GameManager>();
+        //nn = new NeuralNetwork(4, 5, 4, 5);
     }
-
-
-
-    // Update is called once per frame
     void Update()
     {
+        float[] input = _GameManager.GetInput();
+        var output = nn.ForwardPropagate(input);
+        
+        int move = Array.IndexOf(output, output.Max());
+
+        //Debug.Log(string.Join(" ", output) + " " + move, this);
         if (!_GameManager.over)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (move == 0)
             {
                 transform.position += (Vector3.left);
                 if (!_GameManager.ValidMove(transform)) transform.position += (Vector3.right);
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (move == 1)
             {
                 transform.position += (Vector3.right);
                 if (!_GameManager.ValidMove(transform)) transform.position += (Vector3.left);
             }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            else if (move == 2)
             {
                 transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, 90);
                 if (!_GameManager.ValidMove(transform)) transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, -90);
             }
-
-            if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? fallTime / 10 : fallTime))
+            
+            if (true)
             {
 
                 transform.position += (Vector3.down);
                 if (!_GameManager.ValidMove(transform))
                 {
-
+                    _GameManager.moveCounter++;
                     transform.position += (Vector3.up);
                     _GameManager.AddToGrid(transform);
                     _GameManager.CheckForLines();
                     this.enabled = false;
+                    
                     _GameManager.GetComponent<Spawner>().NewTetromino();
                 }
-                previousTime = Time.time;
             }
         }
-
     }
-
-
-
 }

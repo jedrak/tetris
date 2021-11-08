@@ -42,7 +42,7 @@ public class NeuralNetwork
         {
             outputLayer.Add(new Neuron(hiddenLayers[numHiddenLayers - 1]));
         }
-        float[] inp = { 1.0f, 1.0f, 1.0f, 1.0f };
+        //float[] inp = { 1.0f, 1.0f, 1.0f, 1.0f };
         //ForwardPropagate(inp);
     }
 
