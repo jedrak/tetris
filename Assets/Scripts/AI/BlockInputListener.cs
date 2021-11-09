@@ -46,6 +46,7 @@ public class BlockInputListener : Block
                     _GameManager.moveCounter++;
                     transform.position += (Vector3.up);
                     _GameManager.AddToGrid(transform);
+                    _GameManager.moveScore += (int) GetPlacementScore(_GameManager.grid);
                     _GameManager.CheckForLines();
                     this.enabled = false;
                     

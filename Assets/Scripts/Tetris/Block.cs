@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Block : MonoBehaviour
 {
@@ -15,7 +16,36 @@ public class Block : MonoBehaviour
         _GameManager = GetComponentInParent<GameManager>();
     }
 
+    public float GetPlacementScore(Transform [,] grid)
+    {
+        float buff = 0.0f;
+        Transform[] children = transform.GetComponentsInChildren<Transform>();
+        foreach(Transform child in transform)
+        {
+            for(int i = 0; i < GameManager.w; i++)
+            {
+                for(int j = 0; j < GameManager.h; j++)
+                {
+                    if(grid[i,j] == child)
+                    {
+                        if (i == 0) buff++;
+                        if (i == GameManager.w - 1) buff++;
+                        if (j == 0) buff++;
+                        if (j == GameManager.h - 1) buff++;
 
+
+                        if (i < GameManager.w - 1 && grid[i + 1, j] != null && !children.Contains(grid[i + 1, j])) buff++;
+                        if (i > 0 && grid[i - 1, j] != null && !children.Contains(grid[i - 1, j])) buff++;
+                        if (j < GameManager.h - 1 && grid[i, j + 1] != null && !children.Contains(grid[i, j + 1])) buff++;
+                        if (j > 0 && grid[i, j - 1] != null && !children.Contains(grid[i, j - 1])) buff++;
+
+                    }
+                }
+            }
+        }
+        //Debug.Log(buff);
+        return buff;
+    }
 
     // Update is called once per frame
     void Update()
@@ -47,7 +77,10 @@ public class Block : MonoBehaviour
 
                     transform.position += (Vector3.up);
                     _GameManager.AddToGrid(transform);
+                    GetPlacementScore(_GameManager.grid);
+
                     _GameManager.CheckForLines();
+
                     this.enabled = false;
                     _GameManager.GetComponent<Spawner>().NewTetromino();
                 }

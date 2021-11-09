@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static int h = 20;
     public NeuralNetwork nn;
     public int moveCounter = 0;
+    public int moveScore = 0;
     public int linesDeleted = 0;
     public static int w = 10;
     public bool debug = false;
@@ -178,6 +179,7 @@ public class GameManager : MonoBehaviour
             }
             grid[x, y] = child;
         }
+        
     }
 
     public bool ValidMove(Transform tetromino)
