@@ -16,6 +16,17 @@ public class Block : MonoBehaviour
         _GameManager = GetComponentInParent<GameManager>();
     }
 
+    public float GetPlacementH()
+    {
+        float f = 0f;
+        foreach(var t in transform)
+        {
+            int h = Mathf.RoundToInt(transform.position.y - _GameManager.corner.position.y);
+            f += h;
+        }
+        return f/4.0f;
+    }
+
     public float GetPlacementScore(Transform [,] grid)
     {
         float buff = 0.0f;

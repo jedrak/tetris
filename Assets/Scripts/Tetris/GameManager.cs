@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public int linesDeleted = 0;
     public static int w = 10;
     public bool debug = false;
-    private Transform corner;
+    public Transform corner;
     public bool over = false;
     public Block current { private get; set; }
     public int currentBlockType;

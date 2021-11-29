@@ -43,7 +43,7 @@ public class BlockInputListener : Block
                 transform.position += (Vector3.down);
                 if (!_GameManager.ValidMove(transform))
                 {
-                    _GameManager.moveCounter++;
+                    _GameManager.moveCounter += GameManager.h - (int) GetPlacementH();
                     transform.position += (Vector3.up);
                     _GameManager.AddToGrid(transform);
                     _GameManager.moveScore += (int) GetPlacementScore(_GameManager.grid);

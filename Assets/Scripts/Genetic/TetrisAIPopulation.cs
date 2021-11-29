@@ -59,9 +59,9 @@ public class TetrisAIPopulation : MonoBehaviour, IPopulation<GameManager>
         population.Clear();
         for(int i = 0; i < (sorted.Count/2); i++)
         {
-            population.Add(Breed(sorted[i], sorted[i+1]).GetComponent<GameManager>());
+            population.Add(Breed(sorted[0], sorted[i]).GetComponent<GameManager>());
             population.Last().transform.position = Vector3.right * (weight + padding) * ((i*2) % w) + Vector3.up * (height + padding) * ((i*2) / w);
-            population.Add(Breed(sorted[i+1], sorted[i]).GetComponent<GameManager>());
+            population.Add(Breed(sorted[i], sorted[0]).GetComponent<GameManager>());
             population.Last().transform.position = Vector3.right * (weight + padding) * ((i * 2 + 1) % w) + Vector3.up * (height + padding) * ((i * 2 + 1) / w);
 
         }
@@ -81,7 +81,7 @@ public class TetrisAIPopulation : MonoBehaviour, IPopulation<GameManager>
     public float Fitness(GameManager dna)
     {
         //Debug.Log(dna.gameObject.name + " " + (float)dna.GetHeights().Sum() / (float)w);
-        return (float) (dna.moveCounter - dna.GridH() - dna.GetHeights().Sum()/w /*+ (80.0f*dna.linesDeleted)*/ - .5f*dna.GetHoles() - 2*dna.GetBumpines() + dna.moveScore);
+        return (float) (dna.moveCounter /*- dna.GridH() - dna.GetHeights().Sum()/w*/ + (100.0f*dna.linesDeleted) - dna.GetHoles() /*- 2*dna.GetBumpines() + dna.moveScore*/);
     }
 
     public void Mutate(GameManager Kid)
