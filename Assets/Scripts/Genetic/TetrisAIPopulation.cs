@@ -81,7 +81,7 @@ public class TetrisAIPopulation : MonoBehaviour, IPopulation<GameManager>
     public float Fitness(GameManager dna)
     {
         //Debug.Log(dna.gameObject.name + " " + (float)dna.GetHeights().Sum() / (float)w);
-        return (float) (dna.moveCounter /*- dna.GridH() - dna.GetHeights().Sum()/w*/ + (100.0f*dna.linesDeleted) - dna.GetHoles() /*- 2*dna.GetBumpines() + dna.moveScore*/);
+        return (float) (dna.moveCounter /*- dna.GridH() - dna.GetHeights().Sum()/w*/ + (100.0f*dna.linesDeleted) - dna.GetHoles() + dna.sumOfWidths/*- 2*dna.GetBumpines() + dna.moveScore*/);
     }
 
     public void Mutate(GameManager Kid)

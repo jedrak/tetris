@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public bool over = false;
     public Block current { private get; set; }
     public int currentBlockType;
+    public int sumOfWidths = 0;
     internal float[] GetInput()
     {
         float[] ret = new float[10];
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(GetW(0));
         /*string buff = "";
         foreach(var h in GetHeights())
         {
@@ -145,6 +147,15 @@ public class GameManager : MonoBehaviour
         }
         linesDeleted++;
     }
+    public int GetW(int index)
+    {
+        int sum = 0;
+        for (int i = 0; i < w; i++)
+        {
+            if (grid[i, index] != null) sum++;
+        }
+        return sum;
+    }
 
     void RowDown(int i)
     {
@@ -173,6 +184,7 @@ public class GameManager : MonoBehaviour
         {
             int x = Mathf.RoundToInt(child.transform.position.x - corner.position.x);
             int y = Mathf.RoundToInt(child.transform.position.y - corner.position.y);
+            sumOfWidths += y;
             if (debug)
             {
                 Debug.Log(child.transform.position + " x: " + x + " y: " + y + " " + child.gameObject.name + " " + tetromino.name);
@@ -196,7 +208,6 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //Debug.Log("Game" + name +" over");
         over = true;
     }
 }
