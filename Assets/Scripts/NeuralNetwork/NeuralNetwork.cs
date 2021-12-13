@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
-[Serializable]
+[System.Serializable]
 public class NeuralNetwork
 {
     public int hiddenSize, numHiddenLayers, inputSize, outputSize;

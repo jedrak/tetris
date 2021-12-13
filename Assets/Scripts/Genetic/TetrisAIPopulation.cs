@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 public class TetrisAIPopulation : MonoBehaviour, IPopulation<GameManager>
 {
     public int PopulationCount = 100;
     public GameObject AIprefab;
     public List<GameManager> population;
     private int generationCounter = 0;
+
     [SerializeField] private float weight = 10, height = 20, padding = .5f;
 
     [SerializeField] private int w;
     [SerializeField] private TextMeshProUGUI info;
+
+    [ContextMenu("Tools/SaveToJson")]
+    public void SaveToJson()
+    {
+        string jsonString = JsonUtility.ToJson(this);
+        System.IO.File.WriteAllText("D:\\Projects\\Tetris\\Assets\\Models" + (System.DateTime.Now.ToString("yyMMddHHmm")) + ".json", jsonString);
+
+    }
+
+
 
     public GameObject Breed(GameManager parent1, GameManager parent2)
     {
@@ -81,7 +93,7 @@ public class TetrisAIPopulation : MonoBehaviour, IPopulation<GameManager>
     public float Fitness(GameManager dna)
     {
         //Debug.Log(dna.gameObject.name + " " + (float)dna.GetHeights().Sum() / (float)w);
-        return (float) (dna.moveCounter /*- dna.GridH() - dna.GetHeights().Sum()/w*/ + (100.0f*dna.linesDeleted) - dna.GetHoles() + dna.sumOfWidths/*- 2*dna.GetBumpines() + dna.moveScore*/);
+        return (float) (dna.moveCounter /*- dna.GridH() - dna.GetHeights().Sum()/w*/ + (100.0f*dna.linesDeleted) - dna.GetHoles()/*- 2*dna.GetBumpines() + dna.moveScore*/);
     }
 
     public void Mutate(GameManager Kid)

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+[System.Serializable]
 public class GameManager : MonoBehaviour
 {
     public Transform[,] grid;
@@ -104,14 +104,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(GetW(0));
-        /*string buff = "";
-        foreach(var h in GetHeights())
-        {
-            buff += h + " ";
-        }
-        Debug.Log(buff);*/
-        //Debug.Log(GetHoles());
+
     }
     public void CheckForLines()
     {
@@ -184,7 +177,7 @@ public class GameManager : MonoBehaviour
         {
             int x = Mathf.RoundToInt(child.transform.position.x - corner.position.x);
             int y = Mathf.RoundToInt(child.transform.position.y - corner.position.y);
-            sumOfWidths += y;
+            //sumOfWidths += y;
             if (debug)
             {
                 Debug.Log(child.transform.position + " x: " + x + " y: " + y + " " + child.gameObject.name + " " + tetromino.name);
